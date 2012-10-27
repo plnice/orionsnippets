@@ -1,3 +1,9 @@
+/*
+ * Orion Snippets plugin
+ * Authors: Bartosz Polaczyk, Miłosz Lewandowski
+ * Created during the Orion/Google Hackathon 2012, Cracow, Poland.
+ */
+
 // Initialize OS namespace
 var OS$ = {};
 OS$.connectors = [];
