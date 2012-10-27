@@ -1,5 +1,5 @@
 // Initialize OS namespace
-var OS$ = {};
+var OS$ = OS$ || {};
 OS$.connectors = [];
 
 OS$._buttonService = "orion.edit.command";
@@ -18,14 +18,36 @@ OS$._error = function(message){
 	alert(message);
 };
 
-OS$.init = function() {
+OS$.init = function(){
+	//load dependencies if needed
+	var connectorsNumber = OS$.enabledConnectors.length;
+	var requiredFiles=[];
+	for (var i = 0; i <connectorsNumber; i++) {
+		var connectorEntry = OS$.enabledConnectors[i];
+		if(connectorEntry.id !== undefined && !OS$.connectors[connectorEntry.id] &&
+		   requiredFiles.indexOf("lib/connectors/"+connectorEntry.id) === -1){
+			//this js is not included. Add to a arryay of requirements
+			requiredFiles.push("lib/connectors/"+connectorEntry.id);
+		}
+	}
+	if(requiredFiles.length > 0){
+		require(requiredFiles, function() {
+				//callback of required .js files
+				OS$._init();
+			});
+	}else{
+		//no dependencies
+		OS$._init();
+	}
+};
+
+OS$._init = function() {
 	var headers = {
 		name: "Orion Snippets",
 		version: "1.0",
 		description: "Share your snippets to various services."
 	};
 	var provider = new orion.PluginProvider(headers);
-	
 	var connectorsNumber = OS$.enabledConnectors.length;
 	for (var i = 0; i < connectorsNumber; i++) {
 		try{
@@ -44,7 +66,7 @@ OS$.init = function() {
 						}
 					}, 
 					{name: settings.buttonText, key: settings.key});
-			}	
+			}
 		}catch(e){
 			if(OS$.enabledConnectors[i] && OS$.enabledConnectors[i].id){
 				OS$._error("incorrect connector: "+ OS$.enabledConnectors[i].id);

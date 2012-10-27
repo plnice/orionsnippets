@@ -5,7 +5,7 @@ OS$.connectors.googleplusConnector = {
 		if (text !== "") {
 			// Run window with Google+ composer
 			var url = OS$.connectors.googleplusConnector._url+OS$._entity(text);
-			window.open(url, "_blank", "width=300,height=100");
+			window.open(url, "_blank", "width=800,height=400");
 		} else {
 			result.status = false;
 			result.error = "Empty selection.";
