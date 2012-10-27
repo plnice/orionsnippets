@@ -28,7 +28,7 @@ OS$.init = function() {
 	
 	var connectorsNumber = OS$.enabledConnectors.length;
 	for (var i = 0; i < connectorsNumber; i++) {
-		try{
+		try {
 			var connectorEntry = OS$.enabledConnectors[i];
 			var connector = OS$.connectors[connectorEntry.id];
 			var settings = connectorEntry.settings;
@@ -45,11 +45,11 @@ OS$.init = function() {
 					}, 
 					{name: settings.buttonText, key: settings.key});
 			}	
-		}catch(e){
-			if(OS$.enabledConnectors[i] && OS$.enabledConnectors[i].id){
-				OS$._error("incorrect connector: "+ OS$.enabledConnectors[i].id);
-			}else{
-				OS$._error("incorrect connector at "+i);
+		} catch(e) {
+			if (OS$.enabledConnectors[i] && OS$.enabledConnectors[i].id) {
+				OS$._error("Incorrect connector: "+ OS$.enabledConnectors[i].id);
+			} else {
+				OS$._error("Incorrect connector at "+i);
 			}
 		}
 	}
