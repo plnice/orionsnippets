@@ -9,7 +9,11 @@
   <script src="jsapi/jsapi_abstract_database.js"></script>
   <script src="jsapi/jsapi_database.js"></script>
   <script src="jsapi/jsapi_for_google_plus.js"></script>
-  <script src="orionSnippets.js"></script>
+  <script type="text/javascript">
+		(new GooglePlusAPI()).init(function(obj) {
+			alert(obj.status);
+		});
+  </script>
 </head>
 <body>
 
