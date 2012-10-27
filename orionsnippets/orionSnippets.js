@@ -4,6 +4,7 @@ var buttonServiceProperties = {name: "Share Snippet",
 var buttonServiceImpl = {
 	run: function(text) {
 		alert("Hello World");
+		console.log(GooglePlusAPI);
 	}
 };
 
