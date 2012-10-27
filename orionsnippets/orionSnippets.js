@@ -11,7 +11,7 @@ OS$._defaultCallback = function(result) {
 };
 
 OS$._entity = function(text) {
-	return text;
+	return encodeURIComponent(text);
 };
 
 OS$.init = function() {
