@@ -1,10 +1,11 @@
-OS$.connectors["googleplusConnector"] = {
+OS$.connectors.googleplusConnector = {
 	id: "googlePlusConnector",
 	run: function(text, callback) {
 		var result = {status: true};
 		if (text !== "") {
-			// TODO run window with Google+ composer
-			alert(text);
+			// Run window with Google+ composer
+			var url = OS$.connectors.googleplusConnector._url+OS$._entity(text);
+			window.open(url, "_blank", "width=300,height=100");
 		} else {
 			result.status = false;
 			result.error = "Empty selection.";
@@ -14,5 +15,6 @@ OS$.connectors["googleplusConnector"] = {
 	defaultSettings: {
 		buttonText: "Share selection to Google+",
 		key: ["g", true, true]
-	}
+	},
+	_url: "https://m.google.com/app/plus/x/?v=compose&content="
 };

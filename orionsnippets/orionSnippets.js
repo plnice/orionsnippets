@@ -10,6 +10,10 @@ OS$._defaultCallback = function(result) {
 	}
 };
 
+OS$._entity = function(text) {
+	return text;
+};
+
 OS$.init = function() {
 	var headers = {
 		name: "Orion Snippets",
@@ -18,7 +22,8 @@ OS$.init = function() {
 	};
 	var provider = new orion.PluginProvider(headers);
 	
-	for (var i = 0; i < OS$.enabledConnectors.length; i++) {
+	var connectorsNumber = OS$.enabledConnectors.length;
+	for (var i = 0; i < connectorsNumber; i++) {
 		var connectorEntry = OS$.enabledConnectors[i];
 		var connector = OS$.connectors[connectorEntry.id];
 		var settings = connectorEntry.settings;
