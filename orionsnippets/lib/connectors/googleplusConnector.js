@@ -1,3 +1,10 @@
+/*
+ * Orion Snippets plugin
+ * Google+ Connector
+ * Authors: Bartosz Polaczyk, Miłosz Lewandowski
+ * Created during the Orion/Google Hackathon 2012, Cracow, Poland.
+ */
+
 OS$.connectors.googleplusConnector = {
 	id: "googlePlusConnector",
 	run: function(text, callback) {

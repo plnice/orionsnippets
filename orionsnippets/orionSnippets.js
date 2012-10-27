@@ -1,3 +1,9 @@
+/*
+ * Orion Snippets plugin
+ * Authors: Bartosz Polaczyk, Miłosz Lewandowski
+ * Created during the Orion/Google Hackathon 2012, Cracow, Poland.
+ */
+
 // Initialize OS namespace
 var OS$ = OS$ || {};
 OS$.connectors = [];
@@ -50,7 +56,7 @@ OS$._init = function() {
 	var provider = new orion.PluginProvider(headers);
 	var connectorsNumber = OS$.enabledConnectors.length;
 	for (var i = 0; i < connectorsNumber; i++) {
-		try{
+		try {
 			var connectorEntry = OS$.enabledConnectors[i];
 			var connector = OS$.connectors[connectorEntry.id];
 			var settings = connectorEntry.settings;
@@ -66,12 +72,12 @@ OS$._init = function() {
 						}
 					}, 
 					{name: settings.buttonText, key: settings.key});
-			}
-		}catch(e){
-			if(OS$.enabledConnectors[i] && OS$.enabledConnectors[i].id){
-				OS$._error("incorrect connector: "+ OS$.enabledConnectors[i].id);
-			}else{
-				OS$._error("incorrect connector at "+i);
+			}	
+		} catch(e) {
+			if (OS$.enabledConnectors[i] && OS$.enabledConnectors[i].id) {
+				OS$._error("Incorrect connector: "+ OS$.enabledConnectors[i].id);
+			} else {
+				OS$._error("Incorrect connector at "+i);
 			}
 		}
 	}
