@@ -6,12 +6,16 @@ OS$._buttonService = "orion.edit.command";
 
 OS$._defaultCallback = function(result) {
 	if (result.status === false) {
-		alert(result.error);
+		OS$._error(result.error);
 	}
 };
 
 OS$._entity = function(text) {
 	return encodeURIComponent(text);
+};
+
+OS$._error = function(message){
+	alert(message);
 };
 
 OS$.init = function() {
@@ -24,22 +28,30 @@ OS$.init = function() {
 	
 	var connectorsNumber = OS$.enabledConnectors.length;
 	for (var i = 0; i < connectorsNumber; i++) {
-		var connectorEntry = OS$.enabledConnectors[i];
-		var connector = OS$.connectors[connectorEntry.id];
-		var settings = connectorEntry.settings;
-		if (connectorEntry.settings === undefined) {
-			settings = connector.defaultSettings;
+		try{
+			var connectorEntry = OS$.enabledConnectors[i];
+			var connector = OS$.connectors[connectorEntry.id];
+			var settings = connectorEntry.settings;
+			if (connectorEntry.settings === undefined) {
+				settings = connector.defaultSettings;
+			}
+			if (connector !== undefined) {
+				provider.registerService(
+					OS$._buttonService, 
+					{
+						run: function(text) {
+							connector.run(text, OS$._defaultCallback);
+						}
+					}, 
+					{name: settings.buttonText, key: settings.key});
+			}	
+		}catch(e){
+			if(OS$.enabledConnectors[i] && OS$.enabledConnectors[i].id){
+				OS$._error("incorrect connector: "+ OS$.enabledConnectors[i].id);
+			}else{
+				OS$._error("incorrect connector at "+i);
+			}
 		}
-		if (connector !== undefined) {
-			provider.registerService(
-				OS$._buttonService, 
-				{
-					run: function(text) {
-						connector.run(text, OS$._defaultCallback);
-					}
-				}, 
-				{name: settings.buttonText, key: settings.key});
-		}	
 	}
 		
 	provider.connect();
