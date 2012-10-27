@@ -1,20 +1,45 @@
-var buttonService = "orion.edit.command";
-var buttonServiceProperties = {name: "Share Snippet",
-		key: ["s",true,true]};
-var buttonServiceImpl = {
-	run: function(text) {
-		alert("Hello World");
+// Initialize OS namespace
+var OS$ = {};
+OS$.connectors = [];
+
+OS$._buttonService = "orion.edit.command";
+
+OS$._defaultCallback = function(result) {
+	if (result.status === false) {
+		alert(result.error);
 	}
 };
 
-window.onload = function() {
+OS$.init = function() {
 	var headers = {
 		name: "Orion Snippets",
 		version: "1.0",
 		description: "Share your snippets to various services."
 	};
 	var provider = new orion.PluginProvider(headers);
-	provider.registerService(buttonService, buttonServiceImpl, 
-		buttonServiceProperties);
+	
+	for (var i = 0; i < OS$.enabledConnectors.length; i++) {
+		var connectorEntry = OS$.enabledConnectors[i];
+		var connector = OS$.connectors[connectorEntry.id];
+		var settings = connectorEntry.settings;
+		if (connectorEntry.settings === undefined) {
+			settings = connector.defaultSettings;
+		}
+		if (connector !== undefined) {
+			provider.registerService(
+				OS$._buttonService, 
+				{
+					run: function(text) {
+						connector.run(text, OS$._defaultCallback);
+					}
+				}, 
+				{name: settings.buttonText, key: settings.key});
+		}	
+	}
+		
 	provider.connect();
+};
+
+window.onload = function() {
+	OS$.init();
 };
