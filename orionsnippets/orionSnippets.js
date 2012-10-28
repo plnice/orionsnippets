@@ -36,12 +36,12 @@ OS$.init = function(){
 			requiredFiles.push("lib/connectors/"+connectorEntry.id);
 		}
 	}
-	if(requiredFiles.length > 0){
+	if (requiredFiles.length > 0) {
 		require(requiredFiles, function() {
 				//callback of required .js files
 				OS$._init();
 			});
-	}else{
+	} else {
 		//no dependencies
 		OS$._init();
 	}
